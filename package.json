@@ -4,11 +4,10 @@
   "description": "Check out the link for the task requirements/r https://epam-my.sharepoint.com/personal/bhargava_chittapudi_epam_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fbhargava%5Fchittapudi%5Fepam%5Fcom%2FDocuments%2FNode%2Ejs%20Training%2FHomework%202%2Epdf&parent=%2Fpersonal%2Fbhargava%5Fchittapudi%5Fepam%5Fcom%2FDocuments%2FNode%2Ejs%20Training&ga=1",
   "main": "index.js",
   "scripts": {
-    "eslint": "npx eslint ./dist/app.js",
+    "eslint": "npx eslint ./dist/*",
     "lint:fix": "npx eslint --fix",
-    "babel": "C:/Users/Vikas_Gundarapu/Desktop/Daily_Home_Tasks/Nodejs-CRUD/rd-frontend/node_modules/.bin/babel src -d dist",
-    "start": "nodemon ./dist/app.js",
-    "serve": "babel -w src -d dist && nodemon dist/app.js "
+    "babel": "C:/Users/Vikas_Gundarapu/Desktop/Daily_Home_Tasks/Nodejs-CRUD/rd-frontend/node_modules/.bin/babel src/* -d dist",
+    "start": "nodemon ./dist/app.js"
   },
   "repository": {
     "type": "git",
