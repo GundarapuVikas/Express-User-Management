@@ -1,6 +1,6 @@
 # RD-FrontEnd
 
-## Home Task given on NodeJs-Session-3 Task:8.3
+## Home Task given on March 6th (NodeJs-Session-3)
 
 Check out the link for the task requirements
 
