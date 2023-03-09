@@ -6,7 +6,7 @@ router.get("/",controller.main);
 router.post("/addUser",controller.addUser);
 router.get("/users",controller.getusers);
 router.get("/fetch_user/:id",controller.fetchUserById);
-router.get("/update_user/:id",controller.updateUserDetails);
+router.put("/update_user/:id",controller.updateUserDetails);
 router.get("/delete_user/:id",controller.deleteUser);
 router.get("/deletedUsers",controller.listOfDeletedUsers);
 router.get("/AutoSuggestUsers/:substring/:limit",controller.suggestUsers)
