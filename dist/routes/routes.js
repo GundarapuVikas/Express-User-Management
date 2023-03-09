@@ -2,7 +2,7 @@
 
 var _require = require("express"),
   Router = _require.Router;
-var controller = require("./controller");
+var controller = require("../controllers/controller");
 var router = Router();
 router.get("/", controller.main);
 router.post("/addUser", controller.addUser);
