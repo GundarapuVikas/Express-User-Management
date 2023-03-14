@@ -1,14 +1,9 @@
-const Joi=require("joi");
-var listOfUsers=[];
-const schema=Joi.object({
-    id:Joi.string(),
-    login:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-    password:Joi.string().alphanum().required(),
-    age:Joi.number().min(4).max(130).required(),
-    isDeleted:Joi.boolean()
-});
+const {schema}=require('../validators/validate')
+const { v4: uuidv4 } = require('uuid');
 
-const main=(req,res)=>{
+var listOfUsers=[];
+
+const main=(_req,res)=>{
     res.status(200).json({
         "message":"Follow any link to perform any action in postman",
         "Add User":"localhost:4000/addUser",
@@ -23,13 +18,13 @@ const main=(req,res)=>{
 
 const addUser=async(req,res)=>{
     const user_data={
-        id:(new Date()).getTime().toString(36) + Math.random().toString(36).slice(2),
+        id:uuidv4(),
         login:req.body.login,
         password:req.body.password,
         age:req.body.age,
         isDeleted:false
     };
-    const {error,value}=schema.validate({login:user_data.login,password:user_data.password,age:user_data.age});
+    const {error}=schema.validate({login:user_data.login,password:user_data.password,age:user_data.age});
     if(error){
         res.status(400).send(error);
     }
@@ -45,7 +40,7 @@ const addUser=async(req,res)=>{
     } 
 };
 
-const getusers=(req,res)=>{
+const getusers=(_req,res)=>{
     listOfUsers.length? res.status(200).send(listOfUsers.filter(user=>user.isDeleted===false)):res.status(200).send("No users present");
 };
 
@@ -85,7 +80,7 @@ const deleteUser=(req,res)=>{
     }
 };
 
-const listOfDeletedUsers=(req,res)=>{
+const listOfDeletedUsers=(_req,res)=>{
     let listOfDeletedUsers=listOfUsers.filter(user=>user.isDeleted===true);
     listOfDeletedUsers.length? res.status(200).send(listOfDeletedUsers):res.status(200).send("No deleted users");
 };
