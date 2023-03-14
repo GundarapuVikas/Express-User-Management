@@ -6,8 +6,8 @@
   "scripts": {
     "eslint": "npx eslint ./dist/*",
     "lint:fix": "npx eslint --fix",
-    "babel": "C:/Users/Vikas_Gundarapu/Desktop/Daily_Home_Tasks/Nodejs-CRUD/rd-frontend/node_modules/.bin/babel src/* -d dist",
-    "start": "nodemon ./dist/app.js"
+    "babel": "C:/Users/Vikas_Gundarapu/Desktop/Daily_Home_Tasks/Nodejs-CRUD/rd-frontend/node_modules/.bin/babel src -d dist",
+    "start": "nodemon dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "nodemon": "^2.0.21"
   },
   "devDependencies": {
@@ -26,7 +27,7 @@
     "babel-eslint": "^8.2.6",
     "babel-node": "^0.0.1-security",
     "eslint": "^8.35.0",
-    "express": "^4.18.2",
-    "joi": "^17.8.3"
+    "joi": "^17.8.3",
+    "uuid": "^9.0.0"
   }
 }
