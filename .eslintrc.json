@@ -17,35 +17,16 @@
 // }
 
 {
-    "parser": "babel-eslint",
-    "plugins": [
-    ],
     "env": {
         "browser": true,
-        "node": true,
-        "jasmine": true,
-        "es6": true,
-        "jest": true
+        "commonjs": true,
+        "es2021": true
     },
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
     "parserOptions": {
-        "ecmaFeatures": {
-            "arrowFunctions": true,
-            "blockBindings": true,
-            "classes": true,
-            "defaultParams": true,
-            "destructuring": true,
-            "forOf": true,
-            "generators": false,
-            "modules": true,
-            "objectLiteralComputedProperties": true,
-            "objectLiteralDuplicateProperties": false,
-            "objectLiteralShorthandMethods": true,
-            "objectLiteralShorthandProperties": true,
-            "restParams": true,
-            "spread": true,
-            "superInFunctions": true,
-            "templateStrings": true
-        }
+        "ecmaVersion": "latest"
     },
     "rules": {
         "no-debugger": 1,
@@ -349,3 +330,4 @@
         "PUBLIC_URL": true
     }
 }
+
