@@ -73,7 +73,7 @@ const deleteUser=(req,res)=>{
     var Userindex=listOfUsers.findIndex(user=>user.id===userId);
     if(Userindex!=-1){
         listOfUsers[Userindex].isDeleted=true;
-        res.status(200).send("User soft deleted successfully");
+        res.status(200).send("User deleted successfully");
     }
     else{
         res.status(200).send("User doesn't exist to delete");
