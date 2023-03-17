@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> eb2f76317e5b5ef3b7c25610e31bf1fb2e456fd3
 const Joi=require("joi");
 const schema=Joi.object({
     id:Joi.string(),
