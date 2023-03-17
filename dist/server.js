@@ -2,10 +2,10 @@
 
 var express = require("express");
 var userRoutes = require("./routes/routes");
+var config = require('../config');
 var app = express();
-var PORT = 4000;
 app.use(express.json());
 app.use('/', userRoutes);
-app.listen(PORT, function () {
-  console.log("Listening at: localhost:".concat(PORT));
+app.listen(config.PORT, function () {
+  console.log("Listening at: localhost:".concat(config.PORT));
 });
