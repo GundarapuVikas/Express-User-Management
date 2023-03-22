@@ -19,7 +19,7 @@ PREREQUISITES:
 7.  Get ready to watch the lectures and do the homework tasks to study the basic principles and 
     approaches of development server-side applications with Node.js.
 
-## TASK 1
+## TASK 2.1
 
 Write a simple REST service with CRUD operations for User entity.
 • To create REST service, use ExpressJS (https://expressjs.com/).
@@ -36,7 +36,7 @@ The User should have the following properties (you can use UUID as a user identi
 To test the service CRUD methods, you can use Postman (https://www.getpostman.com/).
 
 
-## TASK-2
+## TASK-2.2
 
 Add server-side validation for create/update operations of User entity:
 • all fields are required;
@@ -48,9 +48,9 @@ In case of any property does not meet the validation requirements or the field i
 For requests validation use special packages like joi 
 (https://github.com/hapijs/joi, https://www.npmjs.com/package/express-joi-validation)
 
-## EVALUATION CRITERIA
+## EVALUATION CRITERIA (rate out of 5)
+2. Task 2.1 is partially implemented (w/o getAutoSuggestUsers or other methods).
+3. Task 2.1 is fulfilled to the full extent.
+4. Task 2.1 eslint rules are applied.
+5. Task 2.2 is fulfilled to the full extent; validation package is used.
 
-1. Task 2.1 is partially implemented (w/o getAutoSuggestUsers or other methods).
-2. Task 2.1 is fulfilled to the full extent.
-3. Task 2.1 eslint rules are applied.
-4. Task 2.2 is fulfilled to the full extent; validation package is used.
