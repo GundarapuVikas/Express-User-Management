@@ -48,7 +48,7 @@ In case of any property does not meet the validation requirements or the field i
 For requests validation use special packages like joi 
 (https://github.com/hapijs/joi, https://www.npmjs.com/package/express-joi-validation)
 
-## EVALUATION CRITERIA (rate out of 5)
+## EVALUATION CRITERIA
 2. Task 2.1 is partially implemented (w/o getAutoSuggestUsers or other methods).
 3. Task 2.1 is fulfilled to the full extent.
 4. Task 2.1 eslint rules are applied.
