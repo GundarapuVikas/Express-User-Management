@@ -1,22 +1,22 @@
 const {schema}=require('../validators/validate')
 const { v4: uuidv4 } = require('uuid');
-
+const {PORT}=require('../../config');
 var listOfUsers=[];
 
 const main=(_req,res)=>{
     res.status(200).json({
-        "message":"Follow any link to perform any action in postman",
-        "Add User":"localhost:4000/addUser",
-        "Get list of Users":"localhost:4000/users",
-        "Search for a user by id":"localhost:4000/fetch_user/:id",
-        "Update user details":"localhost:4000/update_user/:id",
-        "Delete a specific user":"localhost:4000/delete_user/:id",
-        "List of Deleted Users":"localhost:4000/deletedUsers",
-        "AutoSuggest users based on substring":"localhost:4000/AutoSuggestUsers/:substring/:limit"
+        "message":`Follow any link to perform any action in postman`,
+        "Add User":`localhost:${PORT}/addUser`,
+        "Get list of Users":`localhost:${PORT}/users`,
+        "Search for a user by id":`localhost:${PORT}/fetch_user/:id`,
+        "Update user details":`localhost:${PORT}/update_user/:id`,
+        "Delete a specific user":`localhost:${PORT}/delete_user/:id`,
+        "List of Deleted Users":`localhost:${PORT}/deletedUsers`,
+        "AutoSuggest users based on substring":`localhost:${PORT}/AutoSuggestUsers/:substring/:limit`
     });
 };
 
-const addUser=async(req,res)=>{
+const addUser=(req,res)=>{
     const user_data={
         id:uuidv4(),
         login:req.body.login,
@@ -40,15 +40,16 @@ const addUser=async(req,res)=>{
     } 
 };
 
-const getusers=(_req,res)=>{
-    listOfUsers.length? res.status(200).send(listOfUsers.filter(user=>user.isDeleted===false)):res.status(200).send("No users present");
+const getusers=async(_req,res)=>{
+    const users=listOfUsers.filter(user=>user.isDeleted===false)
+    users.length? res.status(200).send(users):res.status(200).json({"message":"No users present"});
 };
 
 const fetchUserById=(req,res)=>{
     let userId=req.params.id;
-    const user_data=listOfUsers.find(user=>user.id===userId);
-    if(user_data){res.status(200).send(user_data);}
-    else{res.status(200).send(`No user exits with the id: ${userId}`);}
+    const user_data=listOfUsers.filter(user=>user.id===userId);
+    if(user_data.length){res.status(200).send(user_data);}
+    else{res.status(200).json({"message":`No user exits with the id: ${userId}`});}
 }
 
 const updateUserDetails=(req,res)=>{
@@ -64,7 +65,7 @@ const updateUserDetails=(req,res)=>{
         res.status(200).send(listOfUsers[Userindex]);
     }
     else{
-        res.status(200).send("User doesnt exist");
+        res.status(200).json({"message":"User doesn't exist"});
     }
 };
 
@@ -73,16 +74,16 @@ const deleteUser=(req,res)=>{
     var Userindex=listOfUsers.findIndex(user=>user.id===userId);
     if(Userindex!=-1){
         listOfUsers[Userindex].isDeleted=true;
-        res.status(200).send("User soft deleted successfully");
+        res.status(200).json({'message':"User deleted successfully",'data':listOfUsers[Userindex]});
     }
     else{
-        res.status(200).send("User doesn't exist to delete");
+        res.status(200).json({"message":"User doesn't exist to delete"});
     }
 };
 
 const listOfDeletedUsers=(_req,res)=>{
     let listOfDeletedUsers=listOfUsers.filter(user=>user.isDeleted===true);
-    listOfDeletedUsers.length? res.status(200).send(listOfDeletedUsers):res.status(200).send("No deleted users");
+    listOfDeletedUsers.length? res.status(200).send(listOfDeletedUsers):res.status(200).json({"message":"No deleted users"});
 };
 
 const suggestUsers=(req,res)=>{
@@ -90,10 +91,13 @@ const suggestUsers=(req,res)=>{
     if(listOfMatchedUsers.length){
         res.status(200).send(listOfMatchedUsers.sort((a,b)=>(a.login>b.login)?1:(a.login<b.login)?-1:0));
     }
-    res.status(200).send("No users are found for the given sub string");
+    else{
+        res.status(200).json({"message":"No users are found for the given sub string"})
+    };
 };
 
 module.exports={
+    listOfUsers,
     main,
     addUser,
     getusers,

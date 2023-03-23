@@ -8,74 +8,82 @@ var _require = require('../validators/validate'),
   schema = _require.schema;
 var _require2 = require('uuid'),
   uuidv4 = _require2.v4;
+var _require3 = require('../../config'),
+  PORT = _require3.PORT;
 var listOfUsers = [];
 var main = function main(_req, res) {
   res.status(200).json({
     "message": "Follow any link to perform any action in postman",
-    "Add User": "localhost:4000/addUser",
-    "Get list of Users": "localhost:4000/users",
-    "Search for a user by id": "localhost:4000/fetch_user/:id",
-    "Update user details": "localhost:4000/update_user/:id",
-    "Delete a specific user": "localhost:4000/delete_user/:id",
-    "List of Deleted Users": "localhost:4000/deletedUsers",
-    "AutoSuggest users based on substring": "localhost:4000/AutoSuggestUsers/:substring/:limit"
+    "Add User": "localhost:".concat(PORT, "/addUser"),
+    "Get list of Users": "localhost:".concat(PORT, "/users"),
+    "Search for a user by id": "localhost:".concat(PORT, "/fetch_user/:id"),
+    "Update user details": "localhost:".concat(PORT, "/update_user/:id"),
+    "Delete a specific user": "localhost:".concat(PORT, "/delete_user/:id"),
+    "List of Deleted Users": "localhost:".concat(PORT, "/deletedUsers"),
+    "AutoSuggest users based on substring": "localhost:".concat(PORT, "/AutoSuggestUsers/:substring/:limit")
   });
 };
-var addUser = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var user_data, _schema$validate, error, Userindex;
+var addUser = function addUser(req, res) {
+  var user_data = {
+    id: uuidv4(),
+    login: req.body.login,
+    password: req.body.password,
+    age: req.body.age,
+    isDeleted: false
+  };
+  var _schema$validate = schema.validate({
+      login: user_data.login,
+      password: user_data.password,
+      age: user_data.age
+    }),
+    error = _schema$validate.error;
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    var Userindex = listOfUsers.findIndex(function (user) {
+      return user.login === user_data.login;
+    });
+    if (Userindex == -1) {
+      listOfUsers.push(user_data);
+      res.status(200).send("User added successfully");
+    } else {
+      res.status(200).send("User already exists");
+    }
+  }
+};
+var getusers = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_req, res) {
+    var users;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          user_data = {
-            id: uuidv4(),
-            login: req.body.login,
-            password: req.body.password,
-            age: req.body.age,
-            isDeleted: false
-          };
-          _schema$validate = schema.validate({
-            login: user_data.login,
-            password: user_data.password,
-            age: user_data.age
-          }), error = _schema$validate.error;
-          if (error) {
-            res.status(400).send(error);
-          } else {
-            Userindex = listOfUsers.findIndex(function (user) {
-              return user.login === user_data.login;
-            });
-            if (Userindex == -1) {
-              listOfUsers.push(user_data);
-              res.status(200).send("User added successfully");
-            } else {
-              res.status(200).send("User already exists");
-            }
-          }
-        case 3:
+          users = listOfUsers.filter(function (user) {
+            return user.isDeleted === false;
+          });
+          users.length ? res.status(200).send(users) : res.status(200).json({
+            "message": "No users present"
+          });
+        case 2:
         case "end":
           return _context.stop();
       }
     }, _callee);
   }));
-  return function addUser(_x, _x2) {
+  return function getusers(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
-var getusers = function getusers(_req, res) {
-  listOfUsers.length ? res.status(200).send(listOfUsers.filter(function (user) {
-    return user.isDeleted === false;
-  })) : res.status(200).send("No users present");
-};
 var fetchUserById = function fetchUserById(req, res) {
   var userId = req.params.id;
-  var user_data = listOfUsers.find(function (user) {
+  var user_data = listOfUsers.filter(function (user) {
     return user.id === userId;
   });
-  if (user_data) {
+  if (user_data.length) {
     res.status(200).send(user_data);
   } else {
-    res.status(200).send("No user exits with the id: ".concat(userId));
+    res.status(200).json({
+      "message": "No user exits with the id: ".concat(userId)
+    });
   }
 };
 var updateUserDetails = function updateUserDetails(req, res) {
@@ -92,7 +100,9 @@ var updateUserDetails = function updateUserDetails(req, res) {
     listOfUsers[Userindex].age = updatedAge;
     res.status(200).send(listOfUsers[Userindex]);
   } else {
-    res.status(200).send("User doesnt exist");
+    res.status(200).json({
+      "message": "User doesn't exist"
+    });
   }
 };
 var deleteUser = function deleteUser(req, res) {
@@ -102,16 +112,23 @@ var deleteUser = function deleteUser(req, res) {
   });
   if (Userindex != -1) {
     listOfUsers[Userindex].isDeleted = true;
-    res.status(200).send("User soft deleted successfully");
+    res.status(200).json({
+      'message': "User deleted successfully",
+      'data': listOfUsers[Userindex]
+    });
   } else {
-    res.status(200).send("User doesn't exist to delete");
+    res.status(200).json({
+      "message": "User doesn't exist to delete"
+    });
   }
 };
 var listOfDeletedUsers = function listOfDeletedUsers(_req, res) {
   var listOfDeletedUsers = listOfUsers.filter(function (user) {
     return user.isDeleted === true;
   });
-  listOfDeletedUsers.length ? res.status(200).send(listOfDeletedUsers) : res.status(200).send("No deleted users");
+  listOfDeletedUsers.length ? res.status(200).send(listOfDeletedUsers) : res.status(200).json({
+    "message": "No deleted users"
+  });
 };
 var suggestUsers = function suggestUsers(req, res) {
   var listOfMatchedUsers = listOfUsers.filter(function (user) {
@@ -121,10 +138,15 @@ var suggestUsers = function suggestUsers(req, res) {
     res.status(200).send(listOfMatchedUsers.sort(function (a, b) {
       return a.login > b.login ? 1 : a.login < b.login ? -1 : 0;
     }));
+  } else {
+    res.status(200).json({
+      "message": "No users are found for the given sub string"
+    });
   }
-  res.status(200).send("No users are found for the given sub string");
+  ;
 };
 module.exports = {
+  listOfUsers: listOfUsers,
   main: main,
   addUser: addUser,
   getusers: getusers,
