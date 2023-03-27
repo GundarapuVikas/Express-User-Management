@@ -1,8 +1,8 @@
 const { expect } = require('chai');
-const { listOfUsers } = require('../dist/controllers/controller');
+const { listOfUsers } = require('../src/controllers/controller');
 let chai = require('chai');
 const chaiHttp = require('chai-http');
-let server = require('../dist/server');
+let server = require('../src/server');
 // assertion style
 chai.should();
 
@@ -115,9 +115,10 @@ describe('Tasks Api', () => {
     });
     it("it should a message if there are no users.", (done) => {
       // console.log(listOfUsers)
-      while (listOfUsers.length > 0) {
-        listOfUsers.pop();
-      }
+      // while (listOfUsers.length > 0) {
+      //   listOfUsers.pop();
+      // }
+      listOfUsers.length=0;
       chai.request(server)
         .get('/users')
         .end((err, res) => {
