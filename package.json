@@ -1,0 +1,39 @@
+{
+  "name": "rd-frontend",
+  "version": "1.0.0",
+  "description": "Check out the link for the task requirements/r https://epam-my.sharepoint.com/personal/bhargava_chittapudi_epam_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fbhargava%5Fchittapudi%5Fepam%5Fcom%2FDocuments%2FNode%2Ejs%20Training%2FHomework%202%2Epdf&parent=%2Fpersonal%2Fbhargava%5Fchittapudi%5Fepam%5Fcom%2FDocuments%2FNode%2Ejs%20Training&ga=1",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "npx eslint ./dist/*",
+    "lint:fix": "npx eslint --fix",
+    "babel": "C:/Users/Vikas_Gundarapu/Desktop/Daily_Home_Tasks/Nodejs-CRUD/rd-frontend/node_modules/.bin/babel src -d dist",
+    "start": "nodemon dist/server.js",
+    "test": "nyc mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.epam.com/vikas_gundarapu/rd-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "joi": "^17.9.1",
+    "nodemon": "^2.0.21",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "babel-eslint": "^8.2.6",
+    "babel-node": "^0.0.1-security",
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "chai-sorted": "^0.2.0",
+    "eslint": "^8.35.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0"
+  }
+}
